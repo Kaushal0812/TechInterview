@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "360231166264",
+    "firebase_url": "https://improve-skill.firebaseio.com",
+    "project_id": "improve-skill",
+    "storage_bucket": "improve-skill.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360231166264:android:a1e6264a1a92116e5a21cd",
+        "android_client_info": {
+          "package_name": "com.example.improve_skill"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360231166264-3f4mcc8377p95n1ch3pfhk1nct6etrob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKuPDLE2C9u01xYevWXHjfZZyF8uGi38w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360231166264-3f4mcc8377p95n1ch3pfhk1nct6etrob.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "360231166264-o7k7jta5tvbud4t1d6con2vf75t2colk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.improveSkill"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
