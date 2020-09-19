@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+CollectionReference collectionReference = FirebaseFirestore.instance.collection('catalogue');
 class MyHomePage extends StatefulWidget {
  @override
  _MyHomePageState createState() {
@@ -37,8 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             new UserAccountsDrawerHeader(
               
-              accountEmail: new Text("bramvbilsen@gmail.com"),
-              accountName: new Text("Bramvbilsen"),
+              accountEmail: new Text("techInterview@yopmail.com"),
+              accountName: new Text("Tech Interview"),
               
               decoration: new BoxDecoration(
                 image: new DecorationImage(
@@ -111,18 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-
- Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-   return ListView( 
-     padding: const EdgeInsets.only(top: 20.0),
-     //children: Text(snapshot.data.docs()),
-     children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-   );
- }
-
- Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+Widget _buildListItem(DocumentSnapshot document) {
    //final record = Record.fromSnapshot(data);
-
+  final question = document.data()['q'];
+  final answer = document.data()['a'];
    return Padding(
      key: ValueKey("key"),
      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -133,23 +126,35 @@ class _MyHomePageState extends State<MyHomePage> {
        ),
        child: new ExpansionTile(
       key: new PageStorageKey<int>(3),
-      title: new Text('category'),
-      children: [new Text('iOS is an operating system for apple mobile devices. It is a very popular company in mobile handsets. Its competitor is Android.')],
+      title: new Text(document.data()[question]),
+      children: [new Text(answer)],
     ),
      ),
    );
  }
 
-
-
-
   Widget listOfQA(BuildContext context) {
-   return StreamBuilder<QuerySnapshot>(
-     stream: FirebaseFirestore.instance.collection('catalogue').snapshots(),
-     builder: (context, snapshot) {
-       if (!snapshot.hasData) return LinearProgressIndicator();
-       return _buildList(context, snapshot.data.docs);
-     },
-   );
- }
+
+   CollectionReference simpleData = collectionReference.doc('ios').collection('simple');
+  
+    return StreamBuilder<QuerySnapshot>(
+      stream: simpleData.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        return new ListView(
+               padding: const EdgeInsets.only(top: 20.0),
+            children: snapshot.data.docs.map((data) => _buildListItem(data)).toList(),
+
+        );
+      },
+    );
+}
+
 }
