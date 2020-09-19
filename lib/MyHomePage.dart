@@ -9,8 +9,27 @@ class MyHomePage extends StatefulWidget {
  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
     Color contentColor = Colors.white;
+    TabController _tabController;
+    int _selectedTabIndex = 0;
+
+   List<Widget> _tabs  = [
+              Tab(text: "Simple",),
+              Tab(text: "Medium"),
+              Tab(text: "Advance"),
+            ];
+  @override        
+  void initState(){
+    super.initState();
+    _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabController.addListener(() {
+        setState(() {
+        _selectedTabIndex = _tabController.index;
+      });
+      print("Selected Index: " + _tabController.index.toString());
+     });
+  }
 
  @override
  Widget build(BuildContext context) {
@@ -19,16 +38,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
  Widget _buildBody(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
-            tabs: [
-              Tab(text: "Simple",),
-              Tab(text: "Medium"),
-              Tab(text: "Advance"),
-
-            ],
+            tabs: _tabs,
+            onTap: (index) {
+             // print("index tapped");
+              // Should not used it as it only called when tab options are clicked,
+              // not when user swapped
+            },
+            controller: _tabController,
           ),
           title: Text('Interview Questions'),
         ),
@@ -80,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Center( child: listOfQA(context)),
               Center( child: listOfQA(context))
             ],
+            controller: _tabController,
           ),
         ),
       ),
@@ -88,25 +109,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
  Widget page1(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
-            tabs: [
-              Tab(text: "Simple",),
-              Tab(text: "Medium"),
-              Tab(text: "Advance"),
-            ],
+            tabs: _tabs,
           ),
           title: Text('Interview Questions'),
         ),
 
         body: TabBarView(
+          controller: _tabController,
           children: [
             Center( child: listOfQA(context)),  
             Center( child: listOfQA(context)),
             Center( child: listOfQA(context))
           ],
+          
         ),
       ),
     );
@@ -133,9 +152,23 @@ Widget _buildListItem(DocumentSnapshot document) {
    );
  }
 
+  String quizCategory(){
+    var category = "";
+    switch (_selectedTabIndex) {
+      case 0: category = "simple";
+       break;
+      case 1: category = "medium";
+      break;
+      case 2: category = "advance";
+      break;
+      default: break;
+    }
+    return category;
+  }
+
   Widget listOfQA(BuildContext context) {
 
-   CollectionReference simpleData = collectionReference.doc('ios').collection('simple');
+   CollectionReference simpleData = collectionReference.doc('ios').collection(quizCategory());
   
     return StreamBuilder<QuerySnapshot>(
       stream: simpleData.snapshots(),
