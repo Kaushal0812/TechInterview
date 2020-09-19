@@ -126,7 +126,7 @@ Widget _buildListItem(DocumentSnapshot document) {
        ),
        child: new ExpansionTile(
       key: new PageStorageKey<int>(3),
-      title: new Text(document.data()[question]),
+      title: new Text(question),
       children: [new Text(answer)],
     ),
      ),
