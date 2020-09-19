@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'Record.dart';
 
 CollectionReference collectionReference = FirebaseFirestore.instance.collection('catalogue');
 class MyHomePage extends StatefulWidget {
@@ -10,14 +11,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
-    Color contentColor = Colors.white;
+    Subjects currentSubject = Subjects.ios;
     TabController _tabController;
     int _selectedTabIndex = 0;
 
    List<Widget> _tabs  = [
-              Tab(text: "Simple",),
-              Tab(text: "Medium"),
-              Tab(text: "Advance"),
+              Tab(text: QuizCategory.simple.capitalise()),
+              Tab(text: QuizCategory.medium.capitalise()),
+              Tab(text: QuizCategory.advance.capitalise()),
             ];
   @override        
   void initState(){
@@ -69,20 +70,20 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               ),
             ),
             new ListTile(
-              title: new Text("iOS"),
+              title: new Text(Subjects.ios.title()),
               trailing: new Icon(Icons.arrow_right),
 
               onTap: () {
-                setState((){ contentColor = Colors.white;
+                setState((){ currentSubject = Subjects.ios;
                 Navigator.of(context).pop();
                 });
               }
             ),
             new ListTile(
-              title: new Text("Android"),
+              title: new Text(Subjects.android.title()),
               trailing: new Icon(Icons.arrow_right),
               onTap: () {
-                 setState((){ contentColor = Colors.red;
+                 setState((){ currentSubject = Subjects.android;
                 Navigator.of(context).pop();
                 });
               }
@@ -93,7 +94,6 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         ),
       ),
         body: Container(
-         color: contentColor,
           child: TabBarView(
             children: [
               Center( child: listOfQA(context)),  
@@ -153,22 +153,22 @@ Widget _buildListItem(DocumentSnapshot document) {
  }
 
   String quizCategory(){
-    var category = "";
+    QuizCategory category  = QuizCategory.simple;
     switch (_selectedTabIndex) {
-      case 0: category = "simple";
+      case 0: category = QuizCategory.simple;
        break;
-      case 1: category = "medium";
+      case 1: category = QuizCategory.medium;
       break;
-      case 2: category = "advance";
+      case 2: category = QuizCategory.advance;
       break;
       default: break;
     }
-    return category;
+    return category.value();
   }
 
   Widget listOfQA(BuildContext context) {
 
-   CollectionReference simpleData = collectionReference.doc('ios').collection(quizCategory());
+   CollectionReference simpleData = collectionReference.doc(currentSubject.value()).collection(quizCategory());
   
     return StreamBuilder<QuerySnapshot>(
       stream: simpleData.snapshots(),
