@@ -2,7 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'Record.dart';
 
-CollectionReference collectionReference = FirebaseFirestore.instance.collection('catalogue');
+CollectionReference collectionReference = FirebaseFirestore.instance.collection('catalogue');  
+var quizData = [
+                {"q": "",
+                "a": ""},
+
+];
+
 class MyHomePage extends StatefulWidget {
  @override
  _MyHomePageState createState() {
@@ -12,9 +18,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
     Subjects currentSubject = Subjects.ios;
+    final category = QuizCategory.advance;
+
     TabController _tabController;
     int _selectedTabIndex = 0;
-
    List<Widget> _tabs  = [
               Tab(text: QuizCategory.simple.capitalise()),
               Tab(text: QuizCategory.medium.capitalise()),
@@ -24,6 +31,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   void initState(){
     super.initState();
     _tabController = TabController(length: _tabs.length, vsync: this);
+    // saveToFirestore(category);
     _tabController.addListener(() {
         setState(() {
         _selectedTabIndex = _tabController.index;
@@ -31,6 +39,20 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       print("Selected Index: " + _tabController.index.toString());
      });
   }
+
+  void saveToFirestore(QuizCategory category){
+
+    quizData.forEach((element) {
+       collectionReference.doc(currentSubject.value()).collection(category.value()).add({
+      "q": element['q'],
+      "a": element['a']
+  }).then((_) {
+    print("success!");
+  });
+    });
+
+  
+}
 
  @override
  Widget build(BuildContext context) {
@@ -139,6 +161,7 @@ Widget _buildListItem(DocumentSnapshot document) {
      key: ValueKey("key"),
      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
      child: Container(
+       padding: const EdgeInsets.symmetric(horizontal: 15),
        decoration: BoxDecoration(
          border: Border.all(color: Colors.grey),
          borderRadius: BorderRadius.circular(5.0),
