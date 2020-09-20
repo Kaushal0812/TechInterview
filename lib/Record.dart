@@ -14,7 +14,7 @@ class Record {
 
 enum Subjects{
    ios,  
-   android,
+   flutter,
 }
 
 enum QuizCategory {

@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'Record.dart';
 
 CollectionReference collectionReference = FirebaseFirestore.instance.collection('catalogue');  
+
 var quizData = [
-                {"q": "",
-                "a": ""},
-
-];
-
+  
+  {"q":"",
+  "a":""}
+  
+  ];
 class MyHomePage extends StatefulWidget {
  @override
  _MyHomePageState createState() {
@@ -17,7 +18,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
-    Subjects currentSubject = Subjects.ios;
+    Subjects currentSubject = Subjects.flutter;
     final category = QuizCategory.advance;
 
     TabController _tabController;
@@ -31,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   void initState(){
     super.initState();
     _tabController = TabController(length: _tabs.length, vsync: this);
-    // saveToFirestore(category);
+    //saveToFirestore(category);
     _tabController.addListener(() {
         setState(() {
         _selectedTabIndex = _tabController.index;
@@ -102,10 +103,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               }
             ),
             new ListTile(
-              title: new Text(Subjects.android.title()),
+              title: new Text(Subjects.flutter.title()),
               trailing: new Icon(Icons.arrow_right),
               onTap: () {
-                 setState((){ currentSubject = Subjects.android;
+                 setState((){ currentSubject = Subjects.flutter;
                 Navigator.of(context).pop();
                 });
               }
