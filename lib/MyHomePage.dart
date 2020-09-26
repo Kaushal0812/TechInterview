@@ -1,7 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:improve_skill/Views.dart';
+import 'package:improve_skill/Widgets.dart';
 import 'Record.dart';
 
 CollectionReference collectionReference = FirebaseFirestore.instance.collection('catalogue');  
@@ -44,7 +44,6 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   }
 
   void saveToFirestore(QuizCategory category){
-
     quizData.forEach((element) {
        collectionReference.doc(currentSubject.value()).collection(category.value()).add({
       "q": element['q'],
@@ -52,9 +51,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   }).then((_) {
     print("success!");
   });
-    });
-
-  
+    });  
 }
 
  @override
@@ -63,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
  }
 
  Widget _buildBody(BuildContext context) {
+   String backgroundImageUrl = "https://pbs.twimg.com/media/Dd_k9f0V4AIrAGw.png";
     return DefaultTabController(
       length: _tabs.length,
       child: Scaffold(
@@ -85,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               
               decoration: new BoxDecoration(
                 image: new DecorationImage(
-                  image: new NetworkImage("https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg"),
+                  image: new NetworkImage(backgroundImageUrl),
                   fit: BoxFit.fill
                 )
               ),
