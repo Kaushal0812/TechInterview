@@ -1,5 +1,7 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:improve_skill/Views.dart';
 import 'Record.dart';
 
 CollectionReference collectionReference = FirebaseFirestore.instance.collection('catalogue');  
@@ -67,11 +69,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         appBar: AppBar(
           bottom: TabBar(
             tabs: _tabs,
-            onTap: (index) {
-             // print("index tapped");
-              // Should not used it as it only called when tab options are clicked,
-              // not when user swapped
-            },
+            onTap: (index) {},
             controller: _tabController,
           ),
           title: Text('Interview Questions'),
@@ -87,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               
               decoration: new BoxDecoration(
                 image: new DecorationImage(
-                  image: new NetworkImage("https://img00.deviantart.net/35f0/i/2015/018/2/6/low_poly_landscape__the_river_cut_by_bv_designs-d8eib00.jpg"),
+                  image: new NetworkImage("https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg"),
                   fit: BoxFit.fill
                 )
               ),
@@ -111,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                 });
               }
             ),
-
+          switchBlock(context),
             new Divider(),
           ],
         ),
@@ -125,30 +123,6 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             ],
             controller: _tabController,
           ),
-        ),
-      ),
-    );
-  }
-
- Widget page1(BuildContext context) {
-    return DefaultTabController(
-      length: _tabs.length,
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: TabBar(
-            tabs: _tabs,
-          ),
-          title: Text('Interview Questions'),
-        ),
-
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            Center( child: listOfQA(context)),  
-            Center( child: listOfQA(context)),
-            Center( child: listOfQA(context))
-          ],
-          
         ),
       ),
     );

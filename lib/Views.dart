@@ -12,7 +12,6 @@ Widget switchBlock(BuildContext context) { {
       onChanged: (bool value) {
         themeChange.darkTheme = value;
       },
-      secondary: const Icon(Icons.hourglass_empty),
     );
 }
 }
