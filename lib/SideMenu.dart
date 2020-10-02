@@ -1,7 +1,7 @@
 
  import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:improve_skill/Record.dart';
+import 'package:improve_skill/Subjects.dart';
 import 'package:improve_skill/Widgets.dart';
 
 typedef OnSelectSubject(Subjects subject, int index);

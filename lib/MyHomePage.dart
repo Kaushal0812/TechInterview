@@ -2,8 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:improve_skill/SideMenu.dart';
-import 'package:improve_skill/Widgets.dart';
-import 'Record.dart';
+import 'Subjects.dart';
 
 CollectionReference collectionReference = FirebaseFirestore.instance.collection('catalogue');  
 
@@ -101,7 +100,6 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   }
 
 Widget _buildListItem(DocumentSnapshot document) {
-   //final record = Record.fromSnapshot(data);
   final question = document.data()['q'];
   final answer = document.data()['a'];
    return Padding(
@@ -114,7 +112,8 @@ Widget _buildListItem(DocumentSnapshot document) {
          borderRadius: BorderRadius.circular(5.0),
        ),
        child: new ExpansionTile(
-      key: new PageStorageKey<int>(3),
+      key: new PageStorageKey<int>(1000),
+      initiallyExpanded: false,
       title: new Text(question),
       children: [new Text(answer)],
     ),
