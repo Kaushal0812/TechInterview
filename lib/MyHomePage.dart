@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:improve_skill/SideMenu.dart';
 import 'package:improve_skill/Widgets.dart';
 import 'Record.dart';
 
@@ -43,6 +44,15 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
      });
   }
 
+
+  int _selectedIndex = 0;
+
+  _onSelected(Subjects subject, int index) {
+    setState((){
+        currentSubject = subject;
+        _selectedIndex = index;
+    });
+  }
   void saveToFirestore(QuizCategory category){
     quizData.forEach((element) {
        collectionReference.doc(currentSubject.value()).collection(category.value()).add({
@@ -59,8 +69,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
    return _buildBody(context);
  }
 
+
  Widget _buildBody(BuildContext context) {
-   String backgroundImageUrl = "https://pbs.twimg.com/media/Dd_k9f0V4AIrAGw.png";
     return DefaultTabController(
       length: _tabs.length,
       child: Scaffold(
@@ -74,43 +84,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         ),
 
      drawer: new Drawer(
-        child: new ListView(
-          children: <Widget>[
-            new UserAccountsDrawerHeader(
-              
-              accountEmail: new Text("techInterview@yopmail.com"),
-              accountName: new Text("Tech Interview"),
-              
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image: new NetworkImage(backgroundImageUrl),
-                  fit: BoxFit.fill
-                )
-              ),
-            ),
-            new ListTile(
-              title: new Text(Subjects.ios.title()),
-              trailing: new Icon(Icons.arrow_right),
-
-              onTap: () {
-                setState((){ currentSubject = Subjects.ios;
-                Navigator.of(context).pop();
-                });
-              }
-            ),
-            new ListTile(
-              title: new Text(Subjects.flutter.title()),
-              trailing: new Icon(Icons.arrow_right),
-              onTap: () {
-                 setState((){ currentSubject = Subjects.flutter;
-                Navigator.of(context).pop();
-                });
-              }
-            ),
-          switchBlock(context),
-            new Divider(),
-          ],
-        ),
+        child:  sideMenu(context, _selectedIndex, _onSelected)
       ),
         body: Container(
           child: TabBarView(

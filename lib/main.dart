@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:improve_skill/dark_theme_styles.dart';
 import 'package:provider/provider.dart';
 import 'LaunchScreen.dart';
-import 'dark_theme_provider.dart';
+import 'Theme/dark_theme_provider.dart';
+import 'Theme/dark_theme_styles.dart';
+
 
 void main() async {
    WidgetsFlutterBinding.ensureInitialized();

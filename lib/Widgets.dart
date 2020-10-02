@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'dark_theme_provider.dart';
+import 'Theme/dark_theme_provider.dart';
 
 
 Widget switchBlock(BuildContext context) { {

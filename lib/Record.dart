@@ -1,22 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Record {
- final String name;
- final DocumentReference reference;
-
-// Record.fromMap(Map<String, dynamic> map, {this.reference})
- Record.fromMap(Map<String, dynamic> map, {this.reference})
-     :name = "YTD";//map['what  is ios'];
-
-  Record.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
-}
+import 'package:flutter/foundation.dart';
 
 enum Subjects{
    ios,  
    flutter,
 }
 
+extension SubjectsExt on String {
+  Subjects toSubject() => Subjects.values.firstWhere((d) => describeEnum(d) == toLowerCase());
+}
 enum QuizCategory {
   simple,
   medium,
